@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react"
 import BookForm from "./components/BookForm"
 import BookList from "./components/BookList"
 import SearchForm from "./components/SearchForm"
+
 import "./style.css"
 
 interface Book {
@@ -58,24 +59,32 @@ function App() {
 
   return (
     <div className="app">
-      <header className="head_bar">
-        <h1 className="head_bar__title">Bookshelf Apps</h1>
-      </header>
+
       <main>
+
+        <div className="top-app flex border-1 border-black-500 ">
+          <h1 className="flex text-3xl font-bold text-red-900" >Bookshelf</h1>
+          <SearchForm onSearch={setSearchTerm} />
+        </div>
+
         <BookForm onAddBook={addBook} />
-        <SearchForm onSearch={setSearchTerm} />
-        <BookList
-          title="Belum selesai dibaca"
-          books={filteredBooks.filter((book) => !book.isCompleted)}
-          onToggleCompletion={toggleBookCompletion}
-          onRemove={removeBook}
-        />
-        <BookList
-          title="Selesai dibaca"
-          books={filteredBooks.filter((book) => book.isCompleted)}
-          onToggleCompletion={toggleBookCompletion}
-          onRemove={removeBook}
-        />
+
+        <div className="flex gap-8">
+          <BookList
+            title="Belum selesai dibaca"
+            books={filteredBooks.filter((book) => !book.isCompleted)}
+            onToggleCompletion={toggleBookCompletion}
+            onRemove={removeBook}
+          />
+          <BookList
+            title="Selesai dibaca"
+            books={filteredBooks.filter((book) => book.isCompleted)}
+            onToggleCompletion={toggleBookCompletion}
+            onRemove={removeBook}
+          />
+        </div>
+
+
       </main>
     </div>
   )

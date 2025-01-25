@@ -27,10 +27,12 @@ function BookForm({ onAddBook }: BookFormProps) {
 
   return (
     <section className="input_section">
+      
       <h2>Masukkan Buku Baru</h2>
-      <form onSubmit={handleSubmit}>
-        <div className="input">
-          <label htmlFor="inputBookTitle">Judul</label>
+      <form onSubmit={handleSubmit} className="mb-24">
+       
+        <div className="input flex item-center">
+          <label htmlFor="inputBookTitle" className="whitespace-nowrap min-w-[60px]">Judul</label>
           <input
             id="inputBookTitle"
             type="text"
@@ -39,15 +41,15 @@ function BookForm({ onAddBook }: BookFormProps) {
             required
           />
         </div>
-        <div className="input">
-          <label htmlFor="inputBookAuthor">Penulis</label>
+        <div className="input flex item-center space-x-4 space-y-6">
+          <label htmlFor="inputBookAuthor" className="whitespace-nowrap min-w-[60px]">Penulis</label>
           <input id="inputBookAuthor" type="text" value={author} onChange={(e) => setAuthor(e.target.value)} required />
         </div>
-        <div className="input">
-          <label htmlFor="inputBookYear">Tahun</label>
+        <div className="input flex item-center space-x-4 mb-4">
+          <label htmlFor="inputBookYear" className="whitespace-nowrap min-w-[60px]">Tahun</label>
           <input id="inputBookYear" type="number" value={year} onChange={(e) => setYear(e.target.value)} required />
         </div>
-        <div className="input_inline">
+        <div className="input_inline ">
           <label htmlFor="inputBookIsComplete">Selesai dibaca</label>
           <input
             id="inputBookIsComplete"
@@ -56,6 +58,8 @@ function BookForm({ onAddBook }: BookFormProps) {
             onChange={(e) => setIsCompleted(e.target.checked)}
           />
         </div>
+
+        
         <button type="submit">
           Masukkan Buku ke rak <span>{isCompleted ? "Selesai" : "Belum selesai"} dibaca</span>
         </button>
