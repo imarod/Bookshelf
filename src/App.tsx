@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react"
 import BookForm from "./components/BookForm"
 import BookList from "./components/BookList"
 import SearchForm from "./components/SearchForm"
+import { Bookmark, BookOpen } from "lucide-react"
 
 import "./style.css"
 
@@ -57,34 +58,38 @@ function App() {
 
   const filteredBooks = books.filter((book) => book.bookTitle.toLowerCase().includes(searchTerm.toLowerCase()))
 
+  const totalRead = books.filter((book) => book.isCompleted).length;
+  const totalUnread = books.filter((book) => !book.isCompleted).length;
+
   return (
     <div className="app">
-
-      <main>
-
-        <div className="top-app flex border-1 border-black-500 ">
-          <h1 className="flex text-3xl font-bold text-red-900" >Bookshelf</h1>
-          <SearchForm onSearch={setSearchTerm} />
-        </div>
-
+      <main className="grid gap-8">
+        <SearchForm onSearch={setSearchTerm} />
         <BookForm onAddBook={addBook} />
-
-        <div className="flex gap-8">
+        <div className="grid w-full grid-cols-2 gap-4">
           <BookList
-            title="Belum selesai dibaca"
+            title={
+              <div className="flex items-center justify-center gap-4">
+                <Bookmark className="h-8 w-auto " />
+                <span>Unread ({totalUnread})</span>
+              </div>
+            }
             books={filteredBooks.filter((book) => !book.isCompleted)}
             onToggleCompletion={toggleBookCompletion}
             onRemove={removeBook}
           />
           <BookList
-            title="Selesai dibaca"
+            title={
+              <div className="flex items-center justify-center gap-4">
+                <BookOpen className="h-8 w-auto inline" />
+                <span>Read ({totalRead})</span>
+              </div>
+            }
             books={filteredBooks.filter((book) => book.isCompleted)}
             onToggleCompletion={toggleBookCompletion}
             onRemove={removeBook}
           />
         </div>
-
-
       </main>
     </div>
   )

@@ -1,42 +1,36 @@
 import type React from "react"
 import { useState } from "react"
+import { Search } from "lucide-react"
 
-interface SearchFormProps {
-  onSearch: (term: string) => void
-}
+const BookshelfWithSearch: React.FC = () => {
+  const [searchQuery, setSearchQuery] = useState("")
 
-function SearchForm({ onSearch }: SearchFormProps) {
-  const [searchTerm, setSearchTerm] = useState("")
-
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSearch = (e: React.FormEvent) => {
     e.preventDefault()
-    onSearch(searchTerm)
+    // Implement search logic here
+    console.log("Searching for:", searchQuery)
   }
 
   return (
-    <section className="search_section">
-      <div className="flex justify-end flex-1 ml-4">
-        <form onSubmit={handleSubmit} className="flex gap-2 w-[400px]">
-          <input
-            id="searchBookTitle"
-            className="flex-1 border border-gray-300 rounded-md px-3 py-2 focus:border-blue-500 focus:ring focus:ring-blue-300 focus:outline-none"
-            placeholder="Cari judul buku..."
-            type="text"
-            value={searchTerm}
-            onChange={(e) => setSearchTerm(e.target.value)}
-          />
-          <button
-            type="submit"
-            className="bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-300"
-          >
-            Cari
-          </button>
+    <section className="search_section p-4">
+      <div className="top-app w-full flex flex-col lg:flex-row items-start lg:items-center justify-between border-b border-gray-200 pb-4 mb-4 gap-4">
+        <h1 className="text-4xl font-bold tracking-tight">Bookshelf</h1>
+        <form onSubmit={handleSearch} className="search-form w-full lg:w-auto">
+          <div className="relative flex items-center w-full lg:w-80">
+            <Search className="absolute left-3 text-gray-400 pointer-events-none" size={20} />
+            <input
+              type="text"
+              placeholder="Search books..."
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+              className="w-full pl-10 pr-4 py-2 rounded-full border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+            />
+          </div>
         </form>
       </div>
-
     </section>
   )
 }
 
-export default SearchForm
+export default BookshelfWithSearch
 
