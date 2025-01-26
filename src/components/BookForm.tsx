@@ -16,7 +16,7 @@ function BookForm({ onAddBook }: BookFormProps) {
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault()
     const year = new Date(date).getFullYear()
-    onAddBook({ bookTitle, author, year, isCompleted: false })
+    onAddBook({ bookTitle, author, year, isCompleted })
     setBookTitle("")
     setAuthor("")
     setDate("")
@@ -59,7 +59,7 @@ function BookForm({ onAddBook }: BookFormProps) {
         <button type="submit" className="flex items-center justify-center gap-2 px-4 py-3 md:py-4 lg:py-5 bg-[#6495ed] hover:bg-blue-600 text-white rounded-md w-full transition-colors">
           <>
           <Plus className="mr-2 h-6 w-auto"/>
-          Add Book to  {isCompleted ? "Unread Shelf" : "Read Shelf"}
+          Add Book to  {isCompleted ? "Read Shelf" : "Unread Shelf"}
           </>        
         </button>
       </form>
