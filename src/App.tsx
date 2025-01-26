@@ -101,6 +101,7 @@ function App() {
             onRemove={removeBook}
           />
         </div>
+        <br />
       </main>
     </div>
   )
