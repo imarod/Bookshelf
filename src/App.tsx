@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react"
 import BookForm from "./components/BookForm"
 import BookList from "./components/BookList"
 import SearchForm from "./components/SearchForm"
+import SearchFeedback from "./components/SearchFeedback"
 import { Bookmark, BookOpen } from "lucide-react"
 
 import "./style.css"
@@ -56,17 +57,27 @@ function App() {
     setBooks(books.filter((book) => book.id !== id))
   }
 
-  const filteredBooks = books.filter((book) => book.bookTitle.toLowerCase().includes(searchTerm.toLowerCase()))
+  const filteredBooks = books.filter((book) => {
+    if (searchTerm === "") return true
+    const searchTermLower = searchTerm.toLowerCase()
+    return (
+      book.bookTitle.toLowerCase().includes(searchTermLower) ||
+      book.author.toLowerCase().includes(searchTermLower) ||
+      book.year.toString().includes(searchTermLower)
+    )
+  })
 
-  const totalRead = books.filter((book) => book.isCompleted).length;
-  const totalUnread = books.filter((book) => !book.isCompleted).length;
+  const totalRead = filteredBooks.filter((book) => book.isCompleted).length
+  const totalUnread = filteredBooks.filter((book) => !book.isCompleted).length
 
   return (
     <div className="app">
-      <main className="grid gap-8">
-        <SearchForm onSearch={setSearchTerm} />
+      <main className="grid gap-8">      
+        <SearchForm onSearch={setSearchTerm} />  
+        <SearchFeedback searchTerm={searchTerm} resultCount={filteredBooks.length} />     
+        <hr className="border-gray-300" />
         <BookForm onAddBook={addBook} />
-        <div className="grid w-full grid-cols-2 gap-4">
+        <div className="grid w-full grid-cols-1 gap-4 md:grid-cols-2">
           <BookList
             title={
               <div className="flex items-center justify-center gap-4">
@@ -81,8 +92,8 @@ function App() {
           <BookList
             title={
               <div className="flex items-center justify-center gap-4">
-                <BookOpen className="h-8 w-auto inline" />
-                <span>Read ({totalRead})</span>
+                <BookOpen className="h-8 w-auto inline text-blue-500" />
+                <span className="text-blue-500">Read ({totalRead})</span>
               </div>
             }
             books={filteredBooks.filter((book) => book.isCompleted)}

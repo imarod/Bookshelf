@@ -10,21 +10,16 @@ interface BookFormProps {
 function BookForm({ onAddBook }: BookFormProps) {
   const [bookTitle, setBookTitle] = useState("")
   const [author, setAuthor] = useState("")
-  const [year, setYear] = useState("")
+  const [date, setDate] = useState("")
   const [isCompleted, setIsCompleted] = useState(false)
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault()
-    onAddBook({
-      bookTitle,
-      author,
-      year: Number.parseInt(year),
-      isCompleted,
-    })
+    const year = new Date(date).getFullYear()
+    onAddBook({ bookTitle, author, year, isCompleted: false })
     setBookTitle("")
     setAuthor("")
-    setYear("")
-    setIsCompleted(false)
+    setDate("")
   }
 
   return (
@@ -49,8 +44,8 @@ function BookForm({ onAddBook }: BookFormProps) {
           <input id="inputBookAuthor" type="text" value={author} onChange={(e) => setAuthor(e.target.value)} required />
         </div>
         <div className="input flex item-center space-x-4 mb-4">
-          <label htmlFor="inputBookYear" className="whitespace-nowrap min-w-[60px]">Year</label>
-          <input id="inputBookYear" type="number" value={year} onChange={(e) => setYear(e.target.value)} required />
+          <label htmlFor="inputBookDate" className="whitespace-nowrap min-w-[60px]">Date</label>
+          <input id="inputBookDate" type="date" value={date} onChange={(e) => setDate(e.target.value)} required />
         </div>
         <div className="input_inline ">
           <label htmlFor="inputBookIsComplete">Finished Reading</label>
@@ -61,7 +56,7 @@ function BookForm({ onAddBook }: BookFormProps) {
             onChange={(e) => setIsCompleted(e.target.checked)}
           />
         </div>        
-        <button type="submit" className="flex items-center justify-center gap-2 px-4 py-9 bg-[#6495ed] hover:bg-blue-600 text-white rounded-md w-full transition-colors">
+        <button type="submit" className="flex items-center justify-center gap-2 px-4 py-3 md:py-4 lg:py-5 bg-[#6495ed] hover:bg-blue-600 text-white rounded-md w-full transition-colors">
           <>
           <Plus className="mr-2 h-6 w-auto"/>
           Add Book to  {isCompleted ? "Unread Shelf" : "Read Shelf"}
